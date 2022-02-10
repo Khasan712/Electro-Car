@@ -2,14 +2,14 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import (
-    PostImage,
+    CarImage,
     Color,
     Brend,
     Car
 )
 
-@admin.register(PostImage)
-class PostImageAdmin(admin.ModelAdmin):
+@admin.register(CarImage)
+class CarImageAdmin(admin.ModelAdmin):
     list_display = ['id']
 
 @admin.register(Color)

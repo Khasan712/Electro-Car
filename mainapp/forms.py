@@ -1,8 +1,8 @@
 from django.forms import ModelForm
-from .models import PostImage
+from .models import CarImage
 
 
-class PostImageForm(ModelForm):
+class CarImageForm(ModelForm):
     class Meta:
-        model = PostImage
+        model = CarImage
         fields = '__all__'

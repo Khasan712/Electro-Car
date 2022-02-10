@@ -49,9 +49,10 @@ class Car(models.Model):
     def __str__(self):
         return self.name
 
-class PostImage(models.Model):
+class CarImage(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='car_images', null=True)
     image = models.ImageField(upload_to='image')
+    video = models.FileField(upload_to='car/videos', blank=True)
 
     small = ImageSpecField(
         source='image',
