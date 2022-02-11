@@ -1,10 +1,6 @@
-from distutils.command.upload import upload
-from email.mime import image
-import re
-from turtle import title
+from django.conf import settings
 from django.db import models
 
-# Create your models here.
 
 class Header(models.Model):
     video = models.FileField(upload_to='header/vidoe', blank=True)
@@ -17,7 +13,9 @@ class Header(models.Model):
     def __str__(self):
         return self.title
 
+
 class Post(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     image = models.ImageField(upload_to='blog/images')
     title = models.CharField(max_length=500)
     description = models.CharField(max_length=500)
