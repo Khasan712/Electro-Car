@@ -1,14 +1,10 @@
 
-from keyword import kwlist
 from django.db import models
 from PIL import Image
 from django_resized import ResizedImageField
 from django_countries.fields import CountryField
-# Create your models here.
-
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
-
 
 
 class Color(models.Model):
@@ -17,16 +13,16 @@ class Color(models.Model):
     def __str__(self):
         return self.color
 
+
 class Brend(models.Model):
     name = models.CharField(max_length=500)
-
 
     def __str__(self):
         return self.name
 
 
 class Car(models.Model):
-    brend = models.ForeignKey(Brend, on_delete=models.SET_NULL, null=True)
+    brend = models.ForeignKey(Brend, on_delete=models.SET_NULL, related_name='cars', null=True)
     name = models.CharField(max_length=250)
     description = models.TextField()
     color = models.ManyToManyField(Color, blank=True)
@@ -39,7 +35,7 @@ class Car(models.Model):
     power_battery = models.FloatField()
     power_reserve = models.IntegerField(verbose_name='quvvat_zahirasi')
     max_speed = models.IntegerField()
-    acceleration  = models.FloatField(verbose_name='tezlanish')
+    acceleration = models.FloatField(verbose_name='tezlanish')
     length = models.FloatField()
     width = models.FloatField()
     height = models.FloatField()
@@ -48,6 +44,7 @@ class Car(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class CarImage(models.Model):
     car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='car_images', null=True)
