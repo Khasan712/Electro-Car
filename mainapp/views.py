@@ -1,4 +1,3 @@
-from email import message
 from django.shortcuts import redirect, render
 from rest_framework import status
 from rest_framework.response import Response
