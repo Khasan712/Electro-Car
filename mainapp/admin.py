@@ -14,7 +14,7 @@ class CarImageAdmin(admin.ModelAdmin):
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
-    list_display = ['id']
+    list_display = ['id', 'color']
 
 @admin.register(Brend)
 class BrendAdmin(admin.ModelAdmin):
