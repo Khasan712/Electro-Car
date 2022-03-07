@@ -1,0 +1,44 @@
+# FOR CAR DETAIL API
+
+=========================
+// For image api
+-----------------
+POST create/image/
+GET get/image/id/
+DELETE delete/image/id/
+=========================
+// For color api
+-----------------
+POST create/color/
+GET get/color/id/
+DELETE delete/color/id/
+=========================
+// For brend api
+-----------------
+POST create/brend/
+GET get/brend/id/
+DELETE delete/brend/id/
+=========================
+// For car api
+-----------------
+POST create/car/
+GET get/car/id/
+DELETE delete/car/id/
+=========================
+
+
+# FOR HEADER AND POST
+
+=========================
+// For header api
+-----------------
+POST create/header/
+GET get/header/id/
+DELETE delete/header/id/
+=========================
+// For post api
+-----------------
+POST create/post/
+GET get/post/id/
+DELETE delete/post/id/
+=========================

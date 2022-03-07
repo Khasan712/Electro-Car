@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.conf import settings
+from django.contrib.auth.models import User
 
 from .models import (
     Header,
@@ -58,10 +60,14 @@ def delete_header(request, pk):
 @api_view(['POST',])
 def create_post(request):
     serializer = PostSerializers(request.POST or request.FILES)
+    author = User.objects.all()[0]
     if request.method == 'POST':
-        serializer = PostSerializers(data=request.data)
+        serializer = PostSerializers(author, data=request.data)
+        print("1")
         if serializer.is_valid():
-            serializer.save()
+            print(serializer.data)
+            serializer.save(author)
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         data = {}
         data["False"] = "Wrong"

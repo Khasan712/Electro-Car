@@ -41,11 +41,14 @@ INSTALLED_APPS = [
 
     # Ma apps
     'mainapp',
-    'imagekit',
+    'adminapp',
+    'blog',
 
 
     'rest_framework',
     'django_countries',
+    'imagekit',
+
 ]
 
 MIDDLEWARE = [

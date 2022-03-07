@@ -11,6 +11,7 @@ class HeaderSerializers(serializers.ModelSerializer):
         fields = ("video", 'image', 'title', 'content')
 
 class PostSerializers(serializers.ModelSerializer):
+    author = serializers.CharField()
     class Meta:
         model = Post
-        fields = ("image", 'description', 'title')
+        fields = ("author", "image", 'description', 'title')
