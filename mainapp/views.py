@@ -2,6 +2,10 @@ from django.shortcuts import redirect, render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import viewsets
+from rest_framework.views import APIView
+from rest_framework import generics
+# import requests
 
 # Create your views here.
 from .models import (
@@ -10,7 +14,7 @@ from .models import (
     Brend,
     Car,
 )
-from .forms import CarImageForm
+from .forms import CarForm
 from .serializers import (
     CarImageSerializers,
     ColorSerializers,
@@ -18,19 +22,58 @@ from .serializers import (
     CarSerializers
 )
 
+import json
+from rest_framework.decorators import action
+
+from mainapp import serializers
+
+
+
+class CreateCarView(APIView):
+    queryset = Car.objects.all()
+    serializer_class = CarSerializers
+
+    def post(self, request):
+        serializer = CarSerializers(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    # def get(self, request, pk=None):
+    #     get_car = self.get_object(pk)
+    #     serializer = CarSerializers(get_car)
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
+
+# RetrieveUpdateDestroyAPIView
+
+class CarRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+
+    queryset = Car.objects.all()
+    serializer_class = CarSerializers
+
+
+
+
+
+
+
 def index(request):
-    image = CarImage.objects.all()
-    form = CarImageForm(request.POST and request.FILES)
-    if request.method == 'POST':
-        form = CarImageForm(request.POST and request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-    context = {
-        'image':image,
-        'form':form
-    }
-    return render(request, 'index.html', context)
+    if request.method == "POST":
+        car_name = request.POST.get('name')
+        images = request.FILES.getlist('images')
+        car = Car.objects.create(name=car_name)
+        for img in images:
+            CarImage.objects.create(car=car, image=img)
+
+    return render(request, 'index.html')
+
+
+def car_detail(request, pk):
+    car_url = 'http://127.0.0.1:8000/get/car/'
+    # get_car = requests.get()
+    return render(request, 'car-detail.com')
+
 
 # For Image "POST"
 @api_view(['POST',])
@@ -85,6 +128,8 @@ def create_color(request):
         data = {}
         data["False"] = "Anything is wrong"
         return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 # For Color "GET"
 @api_view(['GET',])
@@ -151,19 +196,47 @@ def delete_brend(request, pk):
 # ----------------------------------------------------------------
 
 
+
+
+
+
+
+
+
+
+
 # For Car "POST"
 @api_view(['POST',])
 def create_car(request):
-    serializer = CarSerializers(request.POST)
+    serializer = CarSerializers(data=request.data)
     if request.method == 'POST':
         serializer = CarSerializers(data=request.data)
+        data = {}
         if serializer.is_valid():
-            print(request.data)
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            car = serializer.save()
+            data['name'] = car.name
+            car_brend = request.POST.get('brend')
+            brend = Brend.objects.get(name=car_brend)
+            print(brend)
+            # data['brend'] = brend
+            return Response(data, status=status.HTTP_201_CREATED)
         data = {}
         data["False"] = "Anything is wrong"
         return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # For Car "GET"
 @api_view(['GET',])

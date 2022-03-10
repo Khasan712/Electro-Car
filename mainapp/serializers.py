@@ -1,12 +1,11 @@
 from dataclasses import fields
 from rest_framework import serializers
 
-from .models import (
-    CarImage,
-    Color,
-    Brend,
-    Car
-)
+from .models import CarImage, Color, Brend, Car
+
+
+
+
 
 
 class ColorSerializers(serializers.ModelSerializer):
@@ -16,46 +15,24 @@ class ColorSerializers(serializers.ModelSerializer):
 
 
 class BrendSerializers(serializers.ModelSerializer):
-    cars_all = serializers.SerializerMethodField()
-
+    # cars_all = serializers.SerializerMethodField()
+    # cars = CarSerializers(many=True, read_only=True)
     class Meta:
         model = Brend
-        fields = ('name', 'cars_all')
+        fields = ('name',)
 
-    def get_cars_all(self, brand):
-        return CarSerializers(brand.cars, many=True).data
+    # def get_cars_all(self, brand):
+    #     return CarSerializers(brand.cars, many=True).data
 
 
 class CarSerializers(serializers.ModelSerializer):
-    color = serializers.CharField()
-    brend = serializers.CharField()
-    images = serializers.SerializerMethodField()
-
     class Meta:
         model = Car
         fields = (
-            'brend',
             'name',
-            'description',
-            'color',
-            'country',
-            'year',
-            'type_body',
-            'number_place',
-            'number_door',
-            'power_motor',
-            'power_battery',
-            'power_reserve',
-            'max_speed',
-            'acceleration',
-            'length',
-            'width',
-            'height',
-            'images'
+            'brend',
         )
 
-    def get_images(self, obj):
-        return CarImageSerializers(obj.car_images, many=True).data
 
 
 class CarImageSerializers(serializers.ModelSerializer):
@@ -67,3 +44,28 @@ class CarImageSerializers(serializers.ModelSerializer):
     class Meta:
         model = CarImage
         fields = ('image', 'video', 'car', 'small', 'medium', 'large')
+
+
+
+
+            # 'description',
+            # 'color',
+            # 'country',
+            # 'year',
+            # 'type_body',
+            # 'number_place',
+            # 'number_door',
+            # 'power_motor',
+            # 'power_battery',
+            # 'power_reserve',
+            # 'max_speed',
+            # 'acceleration',
+            # 'length',
+            # 'width',
+            # 'height',
+            # 'images'
+        # )
+
+    # def get_images(self, obj):
+    #     return CarImageSerializers(obj.car_images, many=True).data
+

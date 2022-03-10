@@ -1,8 +1,15 @@
-from django.forms import ModelForm
-from .models import CarImage
+from django import forms
+from .models import CarImage, Car
 
 
-class CarImageForm(ModelForm):
+# class CarImageForm(forms.ModelForm):
+#     file_field = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+#     class Meta:
+#         model = CarImage
+#         fields = ['name',]
+
+class CarForm(forms.ModelForm):
+    file_field = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta:
-        model = CarImage
-        fields = '__all__'
+        model = Car
+        fields = ['name',]

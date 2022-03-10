@@ -1,6 +1,6 @@
-from unicodedata import name
-from django.urls import path
+from django.urls import path, include
 from . import views
+# from .router import router
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -19,7 +19,8 @@ urlpatterns = [
     path('delete/brend/<int:pk>/', views.delete_brend, name='delete_brend'),
 
 
-    path('create/car/', views.create_car, name='create_car'),
-    path('get/car/<int:pk>/', views.get_car, name='get_car'),
+    path('create/car/', views.CreateCarView.as_view(), name='create_car'),
+    path('get/car/<int:pk>/', views.CarRetrieveUpdateDestroyAPIView.as_view(), name='get_car'),
     path('delete/car/<int:pk>/', views.delete_car, name='delete_car'),
+    # path('create/car/view', include(router.urls))
 ]

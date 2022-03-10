@@ -20,7 +20,7 @@
     <div class="container mt-5">
         <div class="mt-5">
 
-            {% for img in image %}
+            <!-- {% comment %} {% for img in image %}
                 <div class="card-group">
                     <div class="card">
                         <img src="{{img.small.url}}" style="width: 200px; height: 150px;" class="card-img-top" alt="...">
@@ -32,7 +32,17 @@
                         <img src="{{img.large.url}}" style="width: 800px; height: 800px;" class="card-img-top" alt="...">
                     </div>
                 </div>
-            {% endfor %}
+            {% endfor %} {% endcomment %} -->
+
+
+            <form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                <input type="text" name="name">
+                <input type="file" name="images" multiple>
+                <input type="submit" value="Submit">
+            </form>
+            
+            
+            
         </div>
     </div>
 

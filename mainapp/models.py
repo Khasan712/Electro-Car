@@ -1,4 +1,5 @@
 
+from hashlib import blake2b
 from django.db import models
 from PIL import Image
 from django_resized import ResizedImageField
@@ -11,34 +12,36 @@ class Color(models.Model):
     color = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.color
+        return str(self.color)
 
 
 class Brend(models.Model):
-    name = models.CharField(max_length=500)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Car(models.Model):
-    brend = models.ForeignKey(Brend, on_delete=models.SET_NULL, related_name='cars', null=True)
-    name = models.CharField(max_length=250)
-    description = models.TextField()
+    # images = models.FileField(blank=True, null=True)
+    brend = models.ForeignKey(Brend, on_delete=models.CASCADE, related_name='cars', blank=True, null=True)
+    name = models.CharField(max_length=250, blank=True)
+    description = models.TextField(blank=True)
     color = models.ManyToManyField(Color, blank=True)
-    country = CountryField()
-    year = models.IntegerField()
-    type_body = models.CharField(max_length=300, verbose_name='kuzov')
-    number_place = models.IntegerField()
-    number_door = models.IntegerField()
-    power_motor = models.CharField(max_length=250)
-    power_battery = models.FloatField()
-    power_reserve = models.IntegerField(verbose_name='quvvat_zahirasi')
-    max_speed = models.IntegerField()
-    acceleration = models.FloatField(verbose_name='tezlanish')
-    length = models.FloatField()
-    width = models.FloatField()
-    height = models.FloatField()
+    country = CountryField(blank=True)
+    year = models.CharField(max_length=250, blank=True, null=True)
+    type_body = models.CharField(max_length=300, verbose_name='kuzov', blank=True)
+    number_place = models.CharField(max_length=250, blank=True, null=True)
+    number_door = models.CharField(max_length=250, blank=True, null=True)
+    power_motor = models.CharField(max_length=250, blank=True, null=True)
+    power_battery = models.CharField(max_length=250, blank=True, null=True)
+    power_reserve = models.CharField(max_length=250, verbose_name='quvvat_zahirasi', blank=True, null=True)
+    max_speed = models.CharField(max_length=250, blank=True, null=True)
+    acceleration = models.CharField(max_length=250, verbose_name='tezlanish', blank=True, null=True)
+    length = models.CharField(max_length=250, blank=True, null=True)
+    width = models.CharField(max_length=250, blank=True, null=True)
+    height = models.CharField(max_length=250, blank=True, null=True)
+
     date_modified = models.DateTimeField(auto_now=True)
     date_published = models.DateTimeField(auto_now_add=True)
 
@@ -47,9 +50,9 @@ class Car(models.Model):
 
 
 class CarImage(models.Model):
-    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='car_images', null=True)
-    image = models.ImageField(upload_to='image')
-    video = models.FileField(upload_to='car/videos', blank=True)
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='car_images', null=True, blank=True)
+    image = models.FileField(upload_to='image', blank=True, null=True)
+    video = models.FileField(upload_to='car/videos', blank=True, null=True)
 
     small = ImageSpecField(
         source='image',
