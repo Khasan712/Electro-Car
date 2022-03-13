@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework import generics
+from django.db.models import F, Q
 # import requests
 
 # Create your views here.
@@ -21,10 +22,6 @@ from .serializers import (
     BrendSerializers,
     CarSerializers
 )
-
-import json
-from rest_framework.decorators import action
-
 from mainapp import serializers
 
 
@@ -43,3 +40,16 @@ class CreateCarView(APIView):
 class CarRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Car.objects.all()
     serializer_class = CarSerializers
+
+
+
+
+class CreateColor(generics.ListCreateAPIView):
+    queryset = Brend.objects.all()
+    serializer_class =  BrendSerializers
+
+
+class BrendReUpDel(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Brend.objects.all()
+    serializer_class = BrendSerializers
+    
